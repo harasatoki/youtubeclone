@@ -18,9 +18,13 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->string('movie');
             $table->string('thumbnails_image');
-            $table->string('movie_title',20);
+            $table->string('movie_title',100);
             $table->string('movie_outline');
-            $table->string('tag');
+            $table->after('tag',function($table){
+                $table->string('tag1');
+                $table->string('tag2')->nullable();
+                $table->string('tag3')->nullable();
+            });
             $table->timestamps();
             $table->softDeletes();
 
