@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('views_times', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('movie_id');
-            $table->integer('views_time');
+            $table->integer('views_time')->default(0);
 
             $table->index('id');
             $table->index('movie_id');
