@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('animal')->default(1);
             $table->integer('streamer')->default(1);
             $table->integer('society')->default(1);
-            $table->integer('cooking')->default(1);
 
             $table->index('user_id');
 
