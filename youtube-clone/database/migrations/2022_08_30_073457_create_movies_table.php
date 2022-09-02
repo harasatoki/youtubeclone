@@ -20,17 +20,15 @@ return new class extends Migration
             $table->string('thumbnails_image');
             $table->string('movie_title',100);
             $table->string('movie_outline');
-            $table->after('tag',function($table){
-                $table->string('tag1');
-                $table->string('tag2')->nullable();
-                $table->string('tag3')->nullable();
-            });
+            $table->string('gener1');
+            $table->string('gener2')->nullable();
+            $table->string('gener3')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->index('id');
             $table->index('user_id');
-            $table->index('tag');
+            $table->index('geners');
 
             $table->foreign('user_id')
                 ->references('id')
