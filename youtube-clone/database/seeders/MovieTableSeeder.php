@@ -22,9 +22,6 @@ class MovieTableSeeder extends Seeder
                 'thumbnails_image'  => 'test.png',
                 'movie_title'       => 'test update'.$i,
                 'movie_outline'     => 'これはテスト投稿です',
-                'type1'            => 'entertainment',
-                'type2'            => 'education',
-                'type3'            => 'music',
                 'created_at'        => now(),
                 'updated_at'        => now()
             ]);
@@ -36,9 +33,6 @@ class MovieTableSeeder extends Seeder
                 'thumbnails_image'  => 'test.png',
                 'movie_title'       => 'test update'.$i,
                 'movie_outline'     => 'これはテスト投稿です',
-                'type1'            => 'animal',
-                'type2'            => 'streamer',
-                'type3'            => 'society',
                 'created_at'        => now(),
                 'updated_at'        => now()
             ]);
