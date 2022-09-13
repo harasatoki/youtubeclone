@@ -20,6 +20,10 @@ class FollowTableSeeder extends Seeder
                 'following_id'  => $i,
                 'followed_id'   => 2
             ]);
+            Follow::create([
+                'following_id'  => 2,
+                'followed_id'   => $i
+            ]);
         }
     }
 }
