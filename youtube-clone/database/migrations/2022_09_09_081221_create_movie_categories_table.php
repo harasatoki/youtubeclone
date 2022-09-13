@@ -13,22 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('views_log', function (Blueprint $table) {
+        Schema::create('movie_categories', function (Blueprint $table) {
             $table->increments('id')->index();
-            $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('movie_id')->index();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-                
+            $table->integer('movie_category_id')->index();
+            
             $table->foreign('movie_id')
-                ->references('id')
-                ->on('movies')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            ->references('id')
+            ->on('movies')
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
         });
     }
 
@@ -39,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('views_log');
+        Schema::dropIfExists('movie_categories');
     }
 };

@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name',20);
+            $table->increments('id')->index();
+            $table->string('name', 20);
             $table->string('profile_image')->nullable();
             $table->string('heater_image')->nullable();
             $table->string('introduction',140)->nullable();
@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-
-            $table->index('id');
         });
     }
 

@@ -13,16 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('views_times', function (Blueprint $table) {
+        Schema::create('master_movie_categories', function (Blueprint $table) {
             $table->increments('id')->index();
-            $table->unsignedInteger('movie_id')->index();
-            $table->integer('views_time')->default(0);
-
-            $table->foreign('movie_id')
-                ->references('id')
-                ->on('movies')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->string('movie_category');
         });
     }
 
@@ -33,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('views_times');
+        Schema::dropIfExists('master_movie_categories');
     }
 };
