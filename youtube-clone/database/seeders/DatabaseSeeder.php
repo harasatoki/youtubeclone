@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\recomendMovie;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,11 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            UsersTableSeeder::class,
+            MovieTableSeeder::class,
+            CommentTableSeeder::class,
+            FollowTableSeeder::class,
+            HighRateTableSeeder::class,
+            LowRateTableSeeder::class,
+            ViewsLogTableSeeder::class,
+            RecomendMoviesTableSeeder::class,
+            CommentOnCommentTableSeeder::class,
+            MovieCategoryTableSeeder::class,
+            MasterMovieCategoryTableSeeder::class
+        ]);
     }
 }
