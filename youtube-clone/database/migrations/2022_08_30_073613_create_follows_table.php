@@ -15,13 +15,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('follows', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('following_id');
-            $table->unsignedInteger('followed_id');
-
-            $table->index('id');
-            $table->index('following_id');
-            $table->index('followed_id');
+            $table->increments('id')->index();
+            $table->unsignedInteger('following_id')->index();
+            $table->unsignedInteger('followed_id')->index();
 
             $table->foreign('following_id')
                 ->references('id')

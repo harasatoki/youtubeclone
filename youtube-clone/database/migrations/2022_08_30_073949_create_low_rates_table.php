@@ -14,13 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('low_rates', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('movie_id');
-
-            $table->index('id');
-            $table->index('user_id');
-            $table->index('movie_id');
+            $table->increments('id')->index();
+            $table->unsignedInteger('user_id')->index();
+            $table->unsignedInteger('movie_id')->index();
 
             $table->foreign('user_id')
                 ->references('id')

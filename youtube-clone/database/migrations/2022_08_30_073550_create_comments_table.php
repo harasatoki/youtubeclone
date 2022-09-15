@@ -14,16 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('movie_id');
-            $table->string('text',140);
+            $table->increments('id')->index();
+            $table->unsignedInteger('user_id')->index();
+            $table->unsignedInteger('movie_id')->index();
+            $table->string('text', 140);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index('id');
-            $table->index('user_id');
-            $table->index('movie_id');
 
             $table->foreign('user_id')
                 ->references('id')
