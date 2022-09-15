@@ -15,15 +15,17 @@ class CommentOnCommentTableSeeder extends Seeder
      */
     public function run()
     {
+        $k=1;
         for($i = 2; $i <= 11; $i++){
             for($j = 2; $j <= 11; $j++){
                 CommentOnComment::create([
                     'user_id'           => $i,
-                    'comment_id'        => $i+$j,
+                    'comment_id'        => $k,
                     'text'              => 'テストコメント'.$i.'のテストコメント',
                     'created_at'        => now(),
                     'updated_at'        => now()
                 ]);
+                $k++;
             }
         }
     }

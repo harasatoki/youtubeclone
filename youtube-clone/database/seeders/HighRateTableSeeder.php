@@ -16,11 +16,13 @@ class HighRateTableSeeder extends Seeder
     public function run()
     {
         for($i = 2; $i <= 11; $i++){
-            for($j = 2; $j <= 11; $j++){
-                HighRate::create([
-                    'user_id'   => $i,
-                    'movie_id'  => $j
-                ]);
+            if($i%2 == 1){
+                for($j = 2; $j <= 11; $j++){
+                    HighRate::create([
+                        'user_id'   => $i,
+                        'movie_id'  => $j
+                    ]);
+                }
             }
         }
     }

@@ -15,15 +15,13 @@ return new class extends Migration
     {
         Schema::create('recomend_movies', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->index();
             $table->integer('entertainment')->default(1);
             $table->integer('education')->default(1);
             $table->integer('music')->default(1);
             $table->integer('animal')->default(1);
             $table->integer('streamer')->default(1);
             $table->integer('society')->default(1);
-
-            $table->index('user_id');
 
             $table->foreign('user_id')
                 ->references('id')
