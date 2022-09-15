@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_image',
+        'heater_image',
+        'introduction'
     ];
 
     /**
@@ -41,4 +44,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * コメントについた返信のリレーション
+     *
+     * @return void
+     */
+    public function commentOnComment(){
+        return $this->hasMany(CommentOnComment::class);
+    }
+
+    /**
+     * ユーザーidからユーザー情報を検索
+     *
+     * @param int $userId
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchUser($userId){
+        return $this->where('id', $userId)->first();
+    }
 }
