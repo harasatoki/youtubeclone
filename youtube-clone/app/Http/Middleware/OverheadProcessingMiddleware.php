@@ -5,13 +5,14 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\Comment;
-use App\Models\CommentOnComment;
 use App\Models\User;
 use App\Models\Follow;
 use Illuminate\Support\Facades\Auth;
 
 class OverheadProcessingMiddleware
 {
+    private const GUEST_USER_ID = 1;
+
     /**
      * Handle an incoming request.
      *
@@ -24,25 +25,23 @@ class OverheadProcessingMiddleware
         $user = new User();
         $follow = new Follow();
         $comment = new Comment();
-        $commentOnComment = new CommentOnComment();
 
         if(Auth::check()){
             $loginUserId = auth()->id();
             $targetUserId = $loginUserId;
         }else{
-            $guestUserId = 1;
-            $targetUserId = $guestUserId;
+            $targetUserId = self::GUEST_USER_ID;
         }
 
-        $followingUsersId = $follow->fetchUserFollowing($targetUserId);
+        $followingUserIds = $follow->fetchUserFollowing($targetUserId);
         $followingUsers = collect([]);
-        foreach( $followingUsersId as $followingUserId ){
+        foreach( $followingUserIds as $followingUserId ){
             $followingUser = $user->fetchUser($followingUserId->followed_id);
             $followingUsers = $followingUsers->concat([$followingUser]);
         }
 
-        $commentIds = $comment->fetchNowUserCommentIds($targetUserId);
-        $noticeComments = $commentOnComment->noticeComment($commentIds);
+        $commentIds = $comment->fetchTargetUserCommentIds($targetUserId);
+        $noticeComments = $comment->noticeComment($commentIds);
         $request->merge([
             'targetUserId' => $targetUserId,
             'followingUsers' => $followingUsers,
