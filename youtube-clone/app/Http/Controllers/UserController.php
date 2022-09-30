@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Models\CommentOnComment;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Follow;
-use App\Models\recomendMovie;
+use App\Models\RecomendMovie;
 
 class UserController extends Controller
 {
@@ -28,13 +27,13 @@ class UserController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function home(Request $request, Movie $movie, recomendMovie $recomendMovie)
+    public function home(Request $request, Movie $movie, RecomendMovie $recomendMovie)
     {
-        $recomendCategoryIds = $recomendMovie->fetchRecomendCategoryIds($request->nowUserId);
+        $recomendCategoryIds = $recomendMovie->fetchRecomendCategoryIds($request->targetUserId);
         $recomendMovies = $movie->fetchMoviesFromCategoryIds($recomendCategoryIds);
 
         return view('users.home',[
-            "nowUser" => $request->nowUserId,
+            "targetser" => $request->targetUserId,
             "followingUsers" => $request->followingUsers,
             "noticeComments" => $request->noticeComments,
             "recomendMovies" => $recomendMovies
@@ -53,16 +52,16 @@ class UserController extends Controller
     public function channelFollow(Request $request, User $user, Follow $follow){
         $followerCountOfViewedUser = $follow->fetchUserFollowedCount($user->id);
 
-        $followingUsersIdByViewedUser = $follow->fetchUserFollowing($user->id);
+        $followingUserIdsByViewedUser = $follow->fetchUserFollowing($user->id);
         $followingUsersByViewedUser = collect([]);
-        foreach( $followingUsersIdByViewedUser as $followingUserIdByViewedUser ){
+        foreach( $followingUserIdsByViewedUser as $followingUserIdByViewedUser ){
             $followingUserByViewedUser = $user->fetchUser($followingUserIdByViewedUser->followed_id);
             $followingUsersByViewedUser = $followingUsersByViewedUser->concat([$followingUserByViewedUser]);
         }
 
         return view('users.channelFollow', [
             "user" => $user,
-            "nowUser" => $request->nowUserId,
+            "targetUser" => $request->targetUserId,
             "followingUsers" => $request->followingUsers,
             "noticeComments" => $request->noticeComments,
             "followingUsersByViewedUser" => $followingUsersByViewedUser,
@@ -86,7 +85,7 @@ class UserController extends Controller
 
         return view('users.channelMovie',[
             "user" => $user,
-            "nowUser" => $request->nowUserId,
+            "targetUser" => $request->targetUserId,
             "followingUsers" => $request->followingUsers,
             "noticeComments" => $request->noticeComments,
             "fetchUserFollowedCount" => $followerCountOfViewedUser,
@@ -108,7 +107,7 @@ class UserController extends Controller
 
         return view('users.channelOverView',[
             "user" => $user,
-            "nowUser" => $request->nowUserId,
+            "targetUser" => $request->targetUserId,
             "followingUsers" => $request->followingUsers,
             "noticeComments" => $request->noticeComments,
             "fetchUserFollowedCount" => $followerCountOfViewedUser
