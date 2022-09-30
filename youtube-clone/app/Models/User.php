@@ -44,16 +44,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * コメントについた返信のリレーション
-     *
-     * @return void
-     */
-    public function commentOnComment(){
-        return $this->hasMany(CommentOnComment::class);
-    }
-
+    
     /**
      * ユーザーidからユーザー情報を検索
      *

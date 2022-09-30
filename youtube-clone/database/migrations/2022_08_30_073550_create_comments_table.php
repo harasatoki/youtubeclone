@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('movie_id')->index();
+            $table->unsignedInteger('movie_id')->index()->nullable();
             $table->string('text', 140);
+            $table->nestedSet();
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
 

@@ -10,7 +10,8 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'text'
+        'text',
+        array('name')
     ];
 
     /**
@@ -23,23 +24,30 @@ class Comment extends Model
     }
 
     /**
-     * コメントについた返信のリレーション
-     *
-     * @return void
-     */
-    public function commentOnComment(){
-        return $this->hasMany(CommentOnComment::class);
-    }
-
-    /**
      * 使用しているユーザーの投稿したコメントのIDを取得
      *
      * @param int $targetUserId
      * 
      * @return \Illuminate\Http\Response
      */
-    public function fetchtargetUserCommentIds($targetUserId){
-        return $this->where('user_id', $targetUserId)->get('id');
+    public function fetchTargetUserCommentIds($targetUserId){
+        return $this->where('user_id', $targetUserId)->where('parent_id', NULL)->get('id');
+    }
+
+    /**
+     * コメントの通知
+     *
+     * @param array $commentIds
+     * 
+     * @return array
+     */
+    public function noticeComment($commentIds){
+        $noticeComments = collect([]);
+        foreach( $commentIds as $commentId ){
+            $noticeComment = $this->with('user')->where('parent_id', $commentId->id)->get();
+            $noticeComments = $noticeComments->concat($noticeComment);
+        }
+        return $noticeComments; 
     }
 
     /**
@@ -50,6 +58,7 @@ class Comment extends Model
      * @return \Illuminate\Http\Response
      */
     public function fetchComments($movieId){
-        return $this->with('user')->with('commentOnComment.user')->where('movie_id', $movieId)->get();
+        dd($this->with('user')->where('movie_id', $movieId)->get());
+        return $this->with('user')->where('movie_id', $movieId)->get();
     }
 }

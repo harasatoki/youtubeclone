@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             LowRateTableSeeder::class,
             ViewsLogTableSeeder::class,
             RecomendMoviesTableSeeder::class,
-            CommentOnCommentTableSeeder::class,
             MovieCategoryTableSeeder::class,
             MasterMovieCategoryTableSeeder::class,
             ViewsTimeTableSeeder::class
