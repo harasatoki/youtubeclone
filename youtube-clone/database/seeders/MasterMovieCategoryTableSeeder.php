@@ -15,23 +15,16 @@ class MasterMovieCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        MasterMovieCategory::create([
-            'movie_category' => 'entertainment',
-        ]);
-        MasterMovieCategory::create([
-            'movie_category' => 'education',
-        ]);
-        MasterMovieCategory::create([
-            'movie_category' => 'music',
-        ]);
-        MasterMovieCategory::create([
-            'movie_category' => 'animal',
-        ]);
-        MasterMovieCategory::create([
-            'movie_category' => 'streamer',
-        ]);
-        MasterMovieCategory::create([
-            'movie_category' => 'society'
-        ]);
+        $movie_categorys = [
+            'entertainment',
+            'education',
+            'music',
+            'animal',
+            'streamer',
+            'society'
+        ];
+        foreach($movie_categorys as $movie_category){
+            MasterMovieCategory::create([ 'movie_category' => $movie_category ]);
+        }
     }
 }
