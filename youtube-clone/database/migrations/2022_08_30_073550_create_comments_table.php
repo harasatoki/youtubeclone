@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedInteger('movie_id')->index()->nullable();
             $table->string('text', 140);
             $table->nestedSet();
-            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
 
