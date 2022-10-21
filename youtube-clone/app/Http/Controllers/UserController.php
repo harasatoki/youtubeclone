@@ -114,60 +114,51 @@ class UserController extends Controller
         ]);
     }
 
-    //以下、今後使用する可能性があるためコントローラー作成完了時に削除予定
     /**
-     * Store a newly created resource in storage.
+     * ユーザー編集
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  User $user
+     * 
+     * @return \Illuminate\View\View
      */
-    public function store(Request $request)
+    public function edit(User $user)
     {
-
+        if($user->id == auth()->id()){
+            return view('users.edit', ['user' => $user]);
+        }else{
+            return back();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function follow(Request $request, Follow $follow)
     {
-        //return view('users.show');
+        $loginUserId = auth()->id();
+        $isFollowing = $follow->isFollowing($loginUserId, $request->input('userId') );
+
+        if(!$isFollowing) {
+            $follow->follow($loginUserId, $request->input('userId') );
+        }
+
+        return redirect('channel-home');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function unfollow(Request $request, Follow $follow)
     {
-        //
+        $loginUserId = auth()->id();
+        $isFollowing = $follow->isFollowing( $loginUserId, $request->input('userId') );
+
+        if( $isFollowing ) {
+            $follow->unfollow($loginUserId, $request->input('userId') );
+        }
+
+        return redirect('channel-home');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
-    }
+        $userData = $request->all();
+        $user->updateProfile( $userData );
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect('channel-home');
     }
 }

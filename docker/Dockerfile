@@ -7,3 +7,5 @@ RUN sed -i 's!/var/www/html!/var/www/youtube-clone/public!g' /etc/apache2/sites-
 RUN a2enmod rewrite
 RUN apachectl restart
 RUN apt-get install unzip
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+EXPOSE 3000

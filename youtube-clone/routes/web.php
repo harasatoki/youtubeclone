@@ -29,3 +29,6 @@ Route::get('/{user}/channelMovie', [UserController::class, 'channelMovie']);
 Route::get('/{user}/channelOverView', [UserController::class, 'channelOverView']);
 Route::get('/{movie}/movie', [MovieController::class, 'show']);
 Route::get('/create', [MovieController::class, 'create']);
+Route::get('/follow', [UserController::class, 'follow']);
+Route::get('/viewsLog', [MovieController::class, 'viewsLogList']);
+Route::get('/serch', [MovieController::class, 'searchMovie']);

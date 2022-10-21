@@ -35,12 +35,22 @@ class Follow extends Model
     /**
      * チャンネル登録をしているか
      *
-     * @param int $targetUserId
+     * @param int $loginUserId
      * @param int $postedUserId
      * 
      * @return boolean
      */
-    public function isFollowing($targetUserId, $postedUserId){
-        return $this->where('following_id', $targetUserId)->where('followed_id', $postedUserId)->exists();
+    public function isFollowing($loginUserId, $postedUserId){
+        return $this->where('following_id', $loginUserId)->where('followed_id', $postedUserId)->exists();
+    }
+
+    public function follow($loginUserId, $postedUserId){
+        $this->following_id = $loginUserId;
+        $this->followed_id = $postedUserId;
+        $this->save();
+    }
+
+    public function unfollow($loginUserId, $postedUserId){
+        $this->where('following_id', $loginUserId)->where('folloed_id', $postedUserId)->delete();
     }
 }

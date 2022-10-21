@@ -18,7 +18,9 @@ class ViewsLogTableSeeder extends Seeder
         for($i = 2; $i <= 11; $i++){
             ViewsLog::create([
                 'user_id'   => 2,
-                'movie_id'  => $i
+                'movie_id'  => $i,
+                'created_at'        => now(-$i),
+                'updated_at'        => now(-$i)
             ]);
         }
     }

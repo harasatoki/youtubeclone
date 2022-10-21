@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id')->index();
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('movie_id')->index();
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')

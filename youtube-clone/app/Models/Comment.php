@@ -10,8 +10,7 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'text',
-        array('name')
+        'text'
     ];
 
     /**
@@ -52,13 +51,24 @@ class Comment extends Model
 
     /**
      * 動画についたコメントを取得
+     * コメントを投稿時間が早い順に並べるためあえて配列の次元を平坦化
      *
      * @param int $movieId
      * 
      * @return \Illuminate\Http\Response
      */
-    public function fetchComments($movieId){
-        dd($this->with('user')->where('movie_id', $movieId)->get());
-        return $this->with('user')->where('movie_id', $movieId)->get();
+    public function fetchCommentTrees($movieId){
+        $movieComments = $this->with('user')->where('parent_id', NULL)->where('movie_id', $movieId)->get();
+        $commentTrees = collect([]);
+        foreach($movieComments as $movieComment){
+            $commentTree = collect([]);
+            $commentTree = $commentTree->concat([$movieComment]);
+            $replyComments = $this->where('parent_id', $movieComment->id)->get();
+            foreach($replyComments as $replyComment){
+                $commentTree = $commentTree->concat([$replyComment]);
+            }
+            $commentTrees = $commentTrees->concat([$commentTree]);
+        }
+        return $commentTrees;
     }
 }
